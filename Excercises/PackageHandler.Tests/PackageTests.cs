@@ -24,10 +24,45 @@ public class PackageTests
         // Assert
         Assert.Equal(expected, actual);
     }
-    
+
+    [Theory]
+    [InlineData(0, 3770)]
+    [InlineData(1, 3770)]
+    [InlineData(2, 3770)]
+    [InlineData(3, 5655)]
+    [InlineData(6, 11310)]
+    [InlineData(8, 15080)]
+    [InlineData(20, 37700)]
+    public void CanCalculatePriceOfNormalSizedCylinderInline(int weight, int expected)
+    {
+        // Arrange
+        _sut.Weight = weight;
+
+        // Act 
+        var actual = _sut.Price();
+
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+
+    [Theory]
+    [ClassData(typeof(ClassData))]
+    public void CanCalculatePriceOfNormalSizedCylinderClassData(int weight, int expected)
+    {
+        // Arrange
+        _sut.Weight = weight;
+
+        // Act 
+        var actual = _sut.Price();
+
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
     [Theory]
     [MemberData(nameof(TestData.FromCsv), MemberType = typeof(TestData))]
-    public void CanCalculatePriceOfNormalSizedCylinder(int weight, int expected)
+    public void CanCalculatePriceOfNormalSizedCylinderMemberData(int weight, int expected)
     {
         // Arrange
         _sut.Weight = weight;
