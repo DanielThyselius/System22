@@ -64,3 +64,5 @@ appsettings.local.json
 /deploy/
 
 .dockerignore
+
+.vs/
