@@ -25,67 +25,12 @@ public class PackageTests
         Assert.Equal(expected, actual);
     }
     
-    [Fact]
-    public void CanCalculatePriceOfNormalSizedCylinder()
+    [Theory]
+    [MemberData(nameof(TestData.FromCsv), MemberType = typeof(TestData))]
+    public void CanCalculatePriceOfNormalSizedCylinder(int weight, int expected)
     {
         // Arrange
-        var expected = 3770;
-
-        // Act 
-        var actual = _sut.Price();
-
-        // Assert
-        Assert.Equal(expected, actual);
-    }
-    
-    [Fact]
-    public void CanCalculatePriceOfSuperLightCylinder()
-    {
-        // Arrange
-        _sut.Weight = 0;
-        var expected = 3770;
-
-        // Act 
-        var actual = _sut.Price();
-
-        // Assert
-        Assert.Equal(expected, actual);
-    }
-    
-    [Fact]
-    public void CanCalculatePriceOfLightCylinder()
-    {
-        // Arrange
-        _sut.Weight = 1;
-        var expected = 3770;
-
-        // Act 
-        var actual = _sut.Price();
-
-        // Assert
-        Assert.Equal(expected, actual);
-    }
-    
-    [Fact]
-    public void CanCalculatePriceOfSlightlyHeavyCylinder()
-    {
-        // Arrange
-        _sut.Weight = 3;
-        var expected = 5655;
-
-        // Act 
-        var actual = _sut.Price();
-
-        // Assert
-        Assert.Equal(expected, actual);
-    }
-    
-    [Fact]
-    public void CanCalculatePriceOfHeavyCylinder()
-    {
-        // Arrange
-        _sut.Weight = 8;
-        var expected = 15080;
+        _sut.Weight = weight;
 
         // Act 
         var actual = _sut.Price();
@@ -114,4 +59,36 @@ public class PackageTests
         Assert.Equal(weight, _sut.Weight);
     }
 
+    [Fact]
+    public void PriceThrowsPackageTooHeavyExceptionWhenOver20kg()
+    {
+
+    }
+
+    [Fact]
+    public void Price_Over20kg_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        _sut.Weight = 21;
+
+        // Act
+        // Assert
+        Assert.ThrowsAny<InvalidOperationException>(() => _sut.Price());
+    }
+
+
+    public static IEnumerable<object[]> PackageTestWeights()
+    {
+        var list = new List<object[]>
+            {
+                new object[] { 0, 3770 },
+                new object[] { 1, 3770 },
+                new object[] { 2, 3770 },
+                new object[] { 3, 5655 },
+                new object[] { 8, 15080 },
+                new object[] { 20, 37700 }
+            };
+
+        return list;
+    }
 }
