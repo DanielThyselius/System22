@@ -8,14 +8,22 @@ namespace TestabilityDemo
 {
     public class PrintReceipt
     {
+        private readonly IDatabase db;
+        private readonly IDateTimeWrapper _dateTimeWrapper;
+
+        public PrintReceipt(IDatabase database, IDateTimeWrapper dateTimeWrapper)
+        {
+            db = database;
+            _dateTimeWrapper = dateTimeWrapper;
+        }
+
         public string Execute(string item, float quantity)
         {
-            var db = new Database();
-            var now = DateTime.Now;
+            var now = _dateTimeWrapper.GetNow();
+
             var discount = (now.DayOfWeek == DayOfWeek.Friday) ? 25f : 0f;
             var price = db.GetItemPrice(item);
-
-            var total = price * quantity * (1 - (discount / 100));
+            float total = NewMethod(quantity, discount, price);
 
             return $"""
                    ********************************
@@ -28,6 +36,11 @@ namespace TestabilityDemo
                    ********************************
                    """;
 
+        }
+
+        private static float NewMethod(float quantity, float discount, float price)
+        {
+            return price * quantity * (1 - (discount / 100));
         }
 
         public float GetQuantityFromUser()

@@ -8,13 +8,17 @@ namespace TestabilityDemo.Tests
         public void Test1()
         {
             // Arrange
-            var sut = new PrintReceipt();
+            var mockDb = new MockDatabase();
+            var mockDateTimeWrapper = new MockDateTimeWrapper();
+
+            var sut = new PrintReceipt(mockDb, mockDateTimeWrapper);
             var item = "Bok";
             var quantity = 1;
             var price = 2;
-            var discount = 0;
-            var total = 2;
-            var now = DateTime.Now;
+            var discount = 25;
+            var total = 1.5;
+            var now = mockDateTimeWrapper.GetNow();
+            Thread.Sleep(1000);
 
             var expected = $"""
                    ********************************
