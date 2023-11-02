@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestabilityDemo", "Testabil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestabilityDemo.Tests", "TestabilityDemo.Tests\TestabilityDemo.Tests.csproj", "{C0E16831-FDD8-4B7E-9B91-CE363F6AC7BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherApp", "WeatherApp\WeatherApp.csproj", "{51741930-839E-421C-838A-65D1C872423F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{C0E16831-FDD8-4B7E-9B91-CE363F6AC7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0E16831-FDD8-4B7E-9B91-CE363F6AC7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0E16831-FDD8-4B7E-9B91-CE363F6AC7BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51741930-839E-421C-838A-65D1C872423F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51741930-839E-421C-838A-65D1C872423F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51741930-839E-421C-838A-65D1C872423F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51741930-839E-421C-838A-65D1C872423F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{3D992BDA-1991-4A48-B618-592BA87BF7CF} = {11F3FC76-0F9A-4C37-BA08-89EFD87D353D}
 		{8724086F-35C3-4625-A250-A65CF949B8C6} = {371CB568-78EC-4F55-A895-5B0BB2175EC6}
 		{C0E16831-FDD8-4B7E-9B91-CE363F6AC7BA} = {371CB568-78EC-4F55-A895-5B0BB2175EC6}
+		{51741930-839E-421C-838A-65D1C872423F} = {11F3FC76-0F9A-4C37-BA08-89EFD87D353D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E2C5B48F-311E-418B-B4C1-A314A545402F}

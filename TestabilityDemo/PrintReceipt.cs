@@ -39,7 +39,7 @@ namespace TestabilityDemo
 
         public float GetDiscount()
         {
-            return (_now.DayOfWeek == DayOfWeek.Friday) ? 25f : 3f;
+            return (_now.DayOfWeek == DayOfWeek.Friday) ? 25f : 0f;
         }
 
         public float Total(float quantity, float discount, float price)
