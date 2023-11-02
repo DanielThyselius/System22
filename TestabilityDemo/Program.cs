@@ -10,7 +10,7 @@ var item = printReceipt.GetItemFromUser();
 var quantity = printReceipt.GetQuantityFromUser();
 
 
-var receipt = printReceipt.Execute(item, quantity);
+var receipt = printReceipt.GenerateReceiptString(item, quantity);
 Console.WriteLine(receipt);
 
 
@@ -46,8 +46,26 @@ public class DateTimeWrapper : IDateTimeWrapper
 
 public class MockDateTimeWrapper : IDateTimeWrapper
 {
+    private readonly DateTime _now;
+    public MockDateTimeWrapper()
+    {
+        _now = new DateTime(2023, 11, 03, 13, 14, 00);
+    }
+
+    public MockDateTimeWrapper(bool isFriday)
+    {
+        if (isFriday)
+        {
+            _now = new DateTime(2023, 11, 03, 13, 14, 00);
+        }
+        else
+        {
+            _now = new DateTime(2023, 11, 02, 13, 14, 00);
+        }
+    }
+
     public DateTime GetNow()
     {
-        return new DateTime(2023, 11, 03, 13, 14, 00);
+        return _now;
     }
 }

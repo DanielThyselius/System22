@@ -9,21 +9,21 @@ namespace TestabilityDemo
     public class PrintReceipt
     {
         private readonly IDatabase db;
-        private readonly IDateTimeWrapper _dateTimeWrapper;
+        private readonly DateTime _now;
 
         public PrintReceipt(IDatabase database, IDateTimeWrapper dateTimeWrapper)
         {
             db = database;
-            _dateTimeWrapper = dateTimeWrapper;
+            _now = dateTimeWrapper.GetNow();
         }
 
-        public string Execute(string item, float quantity)
-        {
-            var now = _dateTimeWrapper.GetNow();
 
-            var discount = (now.DayOfWeek == DayOfWeek.Friday) ? 25f : 0f;
+        public string GenerateReceiptString(string item, float quantity)
+        {
+            var discount = GetDiscount();
             var price = db.GetItemPrice(item);
-            float total = NewMethod(quantity, discount, price);
+
+            float total = Total(quantity, discount ,price);
 
             return $"""
                    ********************************
@@ -32,13 +32,17 @@ namespace TestabilityDemo
                    rabatt: {discount}%
                    Total price: {total}:-
                    ~~~~~~~~~~~~~~~~~~~~~ 
-                   {now}
+                   {_now}
                    ********************************
                    """;
-
         }
 
-        private static float NewMethod(float quantity, float discount, float price)
+        public float GetDiscount()
+        {
+            return (_now.DayOfWeek == DayOfWeek.Friday) ? 25f : 3f;
+        }
+
+        public float Total(float quantity, float discount, float price)
         {
             return price * quantity * (1 - (discount / 100));
         }
