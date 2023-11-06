@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace UserAuthenticator
 {
-    public interface INotificationService
+    public interface IDatabase
     {
-        public bool Send();
+        bool AddUser(User user);
+
+        User GetUser(string usernname);
     }
 }

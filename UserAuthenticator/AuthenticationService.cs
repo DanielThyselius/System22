@@ -15,9 +15,18 @@ namespace UserAuthenticator
 
     public class AuthenticationService
     {
+        private readonly IMailService _mailService;
+        private readonly IDatabase _database;
 
-        public void Register(User user)
+        public AuthenticationService(IMailService mailService, IDatabase database)
         {
+            this._mailService = mailService;
+            this._database = database;
+        }
+
+        public User Register(string name, string email)
+        {
+            
             throw new NotImplementedException();
         }
 
