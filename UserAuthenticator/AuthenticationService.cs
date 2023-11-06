@@ -30,7 +30,7 @@ namespace UserAuthenticator
             throw new NotImplementedException();
         }
 
-        public void Login(User user)
+        public bool Login(User user)
         {
             throw new NotImplementedException();
         }
