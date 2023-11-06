@@ -24,15 +24,42 @@ namespace UserAuthenticator
             this._database = database;
         }
 
-        public User Register(string name, string email)
+        public User Register(string username, string email)
         {
-            
-            throw new NotImplementedException();
+            var user = new User();
+            user.Name = username;
+            user.Email = email;
+            user.Password = "password";
+
+
+            // This should probably live in _database.AddUser()
+            var userInDb = _database.GetUser(username);
+            if (userInDb == null)
+            {
+                throw new ArgumentException("already exists", "username");
+            }
+
+            _database.AddUser(user);
+
+            _mailService.SendPassword(user.Email, user.Password);
+            return user;
         }
 
-        public bool Login(User user)
+        public bool Login(string username, string password)
         {
-            throw new NotImplementedException();
+            var user = new User();
+            try
+            {
+                user = _database.GetUser(username);
+            }
+            catch (Exception)
+            {
+                // log and return fail
+                return false;
+            }
+
+            return (user.Password == password);
+            
         }
 
         public void Logout(User user)

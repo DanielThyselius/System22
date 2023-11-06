@@ -65,6 +65,36 @@ namespace UserAuthenticator.Tests
         }
 
         [Fact]
+        public void SendMailAfterSavingToDb()
+        {
+            // Arrange
+            var name = "username";
+            var email = "email@test.nu";
+
+            var mockMailService = new Mock<IMailService>(MockBehavior.Strict);
+            var mockDb = new Mock<IDatabase>(MockBehavior.Strict);
+
+            var seq = new MockSequence();
+
+            mockDb.InSequence(seq)
+                .Setup(x => x.AddUser(It.IsAny<User>()))
+                .Returns(true);
+
+            mockMailService.InSequence(seq)
+                .Setup(x => x.SendPassword(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(true);
+
+            var sut = new AuthenticationService(mockMailService.Object, mockDb.Object);
+
+            // Act
+            var actual = sut.Register(name, email);
+            
+            // Assert
+
+        }
+
+
+        [Fact]
         public void LoginUserWorksWithCorrectPassword()
         {
             // Arrange
@@ -82,7 +112,7 @@ namespace UserAuthenticator.Tests
             var sut = new AuthenticationService(mockMailService.Object, mockDb.Object);
 
             // Act
-            var actual = sut.Login(testPerson);
+            var actual = sut.Login(testPerson.Name, testPerson.Password);
 
             // Assert
             mockDb.Verify(x => x.GetUser(testPerson.Name), Times.Once);
@@ -93,31 +123,26 @@ namespace UserAuthenticator.Tests
         public void LoginUserFailsWithIncorrectPassword()
         {
             // Arrange
-            var testPerson = new User()
-            {
-                Name = "username",
-                Email = "email@test.nu",
-                Password = "password"
-            };
-
-            var dbPerson = new User()
-            {
-                Name = "username",
-                Email = "email@test.nu",
-                Password = "PassW0rd"
-            };
+            var username = "username";
+            var password = "password";
 
             var mockMailService = new Mock<IMailService>();
             var mockDb = new Mock<IDatabase>();
-            mockDb.Setup(x => x.GetUser(testPerson.Name)).Returns(dbPerson);
+            mockDb.Setup(x => x.GetUser(username)).Returns(
+                new User
+                {
+                    Name = "username",
+                    Email = "email@test.nu",
+                    Password = "PassW0rd"
+                });
 
             var sut = new AuthenticationService(mockMailService.Object, mockDb.Object);
 
             // Act
-            var actual = sut.Login(testPerson);
+            var actual = sut.Login(username, password);
 
             // Assert
-            mockDb.Verify(x => x.GetUser(testPerson.Name), Times.Once);
+            mockDb.Verify(x => x.GetUser(username), Times.Once);
             Assert.False(actual);
         }
 
@@ -125,12 +150,8 @@ namespace UserAuthenticator.Tests
         public void LoginUserFailsWithUnregisteredUsername()
         {
             // Arrange
-            var testPerson = new User()
-            {
-                Name = "Unregistered",
-                Email = "email@test.nu",
-                Password = "password"
-            };
+            var username = "Unregistered";
+            var password = "password";
 
             var mockMailService = new Mock<IMailService>();
             var mockDb = new Mock<IDatabase>();
@@ -142,7 +163,7 @@ namespace UserAuthenticator.Tests
             var sut = new AuthenticationService(mockMailService.Object, mockDb.Object);
 
             // Act
-            var actual = sut.Login(testPerson);
+            var actual = sut.Login(username, password);
 
             // Assert
             Assert.False(actual);
