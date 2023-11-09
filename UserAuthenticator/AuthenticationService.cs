@@ -26,6 +26,8 @@ namespace UserAuthenticator
 
         public User Register(string username, string email)
         {
+            ValidateUsername(username);
+
             var user = new User();
             user.Name = username;
             user.Email = email;
@@ -45,6 +47,15 @@ namespace UserAuthenticator
             return user;
         }
 
+        private static void ValidateUsername(string username)
+        {
+            if (username.Contains("@"))
+            {
+                throw new ArgumentException("No @!");
+            }
+        }
+
+  
         public bool Login(string username, string password)
         {
             var user = new User();
@@ -71,5 +82,13 @@ namespace UserAuthenticator
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Only for testing!
+        /// </summary>
+        /// <param name="s"></param>
+        public void TESTValidateUsername(string s) => ValidateUsername(s);
+
+
     }
 }

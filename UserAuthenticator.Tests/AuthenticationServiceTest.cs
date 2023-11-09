@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System.Reflection;
 
 namespace UserAuthenticator.Tests
 {
@@ -169,7 +170,17 @@ namespace UserAuthenticator.Tests
             Assert.False(actual);
         }
 
+        [Fact]
+        public void TestPrivate()
+        {
+            MemberInfo[] fields = typeof(AuthenticationService).GetMembers(BindingFlags.NonPublic | BindingFlags.Instance);
 
+            foreach (var item in fields)
+            {
+                
+            }
+
+        }
 
     }
 }
