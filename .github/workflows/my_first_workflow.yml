@@ -1,0 +1,10 @@
+name: My first workflow
+
+on: workflow_dispatch
+
+jobs:
+my-amazing-job:
+runs-on: ubuntu-latest
+steps:
+- run: echo "The amazing job has started"
+- run: echo "The amazing job is complete"
