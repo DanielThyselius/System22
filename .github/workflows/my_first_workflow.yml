@@ -7,4 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The amazing job has started"
+      - run: echo "This was triggered by a ${{ github.event_name }} event."
       - run: echo "The amazing job is complete"
+  my-amazing-checkout-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Cloning ${{ github.repository }} to the runner..."
+      - name: Checkout repo
+        uses: actions/checkout@v4.1.1
+      - run: echo "The repo has been cloned and is ready for... well... anything!"
+      - name: List files in repo
+        run: |
+          ls -lah ${{ github.workspace }};
+          echo "Contents of README.md";
+          cat README.md
+        
+      
+  
