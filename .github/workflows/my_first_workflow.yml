@@ -23,5 +23,28 @@ jobs:
           cat README.md
       - run: echo "This job's status is ${{ job.status }}"
         
-      
-  
+  build-and-test:
+    runs-on: ubuntu-latest
+   
+    steps:
+    - uses: actions/checkout@v4.1.1
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3.2.0
+      with:         
+        dotnet-version: 7.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+          
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test ./TestabilityDemo.Tests/TestabilityDemo.Tests.csproj --no-build --logger "html" --results-directory "test_results"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: code/test_results
