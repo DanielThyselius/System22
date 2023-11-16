@@ -20,4 +20,23 @@ jobs:
         run: echo "you said no !! :("
         if: inputs.fail_my_step == 'no'
 
+      - name: Step that may fail
+        shell: bash
+        run: |
+          echo "Hello, I may fail"
+          if [ "yes" = "${{ inputs.fail_my_step }}" ]; then
+            exit 42
+          fi
+
+      - name: Another step
+        run: echo "another step..."
+          
+      - name: Another step
+        run: echo "another step..."
+          
+          
+
+
+
+
         
