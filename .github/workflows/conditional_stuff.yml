@@ -7,7 +7,7 @@ on:
         description: 'Shall we fail the step? (yes/no)'
         required: true
         type: string
-        default: yes
+        default: 'yes'
 jobs:
   the-best-job:
     runs-on: ubuntu-latest
@@ -34,8 +34,13 @@ jobs:
       - name: Another step
         run: echo "another step..."
           
-          
+      - name: Step that runs on failure
+        if: failure()
+        run: echo "Oh no... call for help!"
 
+      - name: Step that always runs
+        if: always()
+        run: echo "I will always run!"
 
 
 
