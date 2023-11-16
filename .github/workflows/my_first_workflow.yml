@@ -35,10 +35,10 @@ jobs:
         dotnet-version: 7.0.x
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./TestabilityDemo.Tests/TestabilityDemo.Tests.csproj
           
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./TestabilityDemo.Tests/TestabilityDemo.Tests.csproj --no-restore
 
     - name: Test
       run: dotnet test ./TestabilityDemo.Tests/TestabilityDemo.Tests.csproj --no-build --logger "html" --results-directory "test_results"
