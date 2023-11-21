@@ -31,7 +31,7 @@ jobs:
           fi
 
       - name: Another step
-        run: echo "another step..."
+        run: echo "another step run by ${{ secrets.MY_REAL_NAME }}"
           
       - name: Another step
         run: echo "another step..."
