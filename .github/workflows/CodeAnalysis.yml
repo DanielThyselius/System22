@@ -8,6 +8,8 @@ jobs:
       - run: echo "Hello!"
   comment:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read|write|none
     steps:
       - uses: actions/github-script@v6
         with:
