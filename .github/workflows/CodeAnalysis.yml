@@ -6,6 +6,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello!"
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read|write|none
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Hello from workflow!'
+            })
     
   build:
     name: Build and analyze
